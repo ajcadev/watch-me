@@ -1,8 +1,62 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { createServer, Model } from "miragejs"
+import { App } from './App';
+
+createServer({
+  models: {
+    genre: Model, 
+  },
+
+  seeds(server) {
+    server.db.loadData({
+      genres: [
+				{
+					id: 1,
+					name: "action",
+					title: "Ação"
+				},
+				{
+					id: 2,
+					name: "comedy",
+					title: "Comédia"
+				},
+				{
+					id: 3,
+					name: "documentary",
+					title: "Documentário"
+				},
+				{
+					id: 4,
+					name: "drama",
+					title: "Drama"
+				},
+				{
+					id: 5,
+					name: "horror",
+					title: "Terror"
+				},
+				{
+					id: 6,
+					name: "family",
+					title: "Família"
+				}
+			]
+    })
+  },
+
+  routes(){
+    this.namespace = "api"
+    this.get("/genres", () => {
+      return this.schema.all("genre")
+    })
+
+    this.post("/genres", (schema, request) => {
+      const data = JSON.parse(request.requestBody)
+      return this.schema.create("genre", data)
+    })
+  }
+})
 
 ReactDOM.render(
   <React.StrictMode>
@@ -10,8 +64,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
