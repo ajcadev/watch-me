@@ -1,32 +1,45 @@
 import { useEffect, useState } from "react";
-import { GenreResponseProps, MovieProps } from "./common/types";
+import { Genre, Movie } from "./common/types";
 import { Content } from "./components/Content";
 import { SideBar } from "./components/SideBar";
 import { api } from "./services/api";
 import { GlobalStyles } from "./styles/global";
 
+interface GenreResponse {
+	genres: Genre[];
+}
+
+interface MovieResponse {
+	movies: Movie[]
+}
+
+
+interface SelectedGenre {
+	genre: Genre;
+}
+
 export function App() {
-	const [genres, setGenres] = useState<GenreResponseProps[]>([])
+	const [genres, setGenres] = useState<Genre[]>([])
 	const [selectedGenreId, setSelectedGenreId] = useState(1)
-	const [movies, setMovies] = useState<MovieProps[]>([]);
-	const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>({} as GenreResponseProps);
+	const [movies, setMovies] = useState<Movie[]>([]);
+	const [selectedGenre, setSelectedGenre] = useState<Genre>({} as Genre);
 
 	useEffect(() => {	
-    api.get<GenreResponseProps[], any>('genres')
+    api.get<GenreResponse>('/genres')
 		.then(response => {
 			setGenres(response.data.genres)
 		})
   }, []);
 
   useEffect(() => {
-    api.get<MovieProps[], any>(`movies/:Genre_id=${selectedGenreId}`)
+    api.get<MovieResponse>(`/movies/?Genre_id=${selectedGenreId}`)
 		.then(response => {
       setMovies(response.data.movies);
     });
 		
-    api.get<GenreResponseProps>(`genres/${selectedGenreId}`)
+    api.get<SelectedGenre>(`/genres/${selectedGenreId}`)
 		.then(response => {
-      setSelectedGenre(response.data);
+      setSelectedGenre(response.data.genre);
     })
   }, [selectedGenreId]);
 

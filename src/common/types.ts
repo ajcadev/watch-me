@@ -1,10 +1,10 @@
-export interface GenreResponseProps {
+export interface Genre {
   id: number;
   name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
   title: string;
 }
 
-export interface MovieProps {
+export interface Movie {
   imdbID: string;
   Title: string;
   Poster: string;

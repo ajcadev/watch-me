@@ -1,10 +1,10 @@
-import { GenreResponseProps, MovieProps } from "../../common/types";
+import { Genre, Movie } from "../../common/types";
 import { MovieCard } from "../MovieCard";
 import { Container } from "./styles";
 
 interface ContentProps {
-	movies: MovieProps[];
-	selectedGenre: GenreResponseProps;
+	movies: Movie[];
+	selectedGenre: Genre;
 }
 
 export function Content({movies, selectedGenre}: ContentProps) {

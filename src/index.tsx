@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createServer, Model } from "miragejs"
 import { App } from './App';
-import { GenreResponseProps } from './common/types';
 
 createServer({
   models: {
@@ -996,23 +995,9 @@ createServer({
   routes(){
     this.namespace = "api"
 
-    this.get("/genres", () => {
-      return this.schema.all("genre")
-    })
-
-		this.get("/genres/:id", (schema, request) => {
-			let id = request.params.id
-			// retornar um objeto do tipo GenreResponseProps baseado no valor do parâmentro :id
-			// se :id = 1 então retornar o objeto {id: 1, name: "action", title: "Ação"}
-			// se :id = 2 então retornar o objeto {id: 2, name: "comedy", title: "Comédia"}
-			// e assim sucessivamente.
-			return schema.genres.find(id)
-		})
-
-		this.get("/movies/:Genre_id", (schema, request) => {
-			let genre_id = request.params.Genre_id
-			return schema.all("movie")
-		})
+		this.get("/genres")
+		this.get("genres/:id")
+		this.get("/movies/", (schema: any, request) => schema.where("movie", request.queryParams))
   }
 })
 

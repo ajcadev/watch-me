@@ -1,9 +1,9 @@
-import { GenreResponseProps } from "../../common/types";
+import { Genre } from "../../common/types";
 import { Button } from "../Button";
 import { Container } from "./styles";
 
 interface SideBarProps {
-	genres: GenreResponseProps[];
+	genres: Genre[];
 	selectedGenreId: number;
 	onButtonClick: (id:number) => void;
 }
