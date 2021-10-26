@@ -14,7 +14,7 @@ interface MovieResponse {
 }
 
 
-interface SelectedGenre {
+interface SelectedGenreResponse {
 	genre: Genre;
 }
 
@@ -37,7 +37,7 @@ export function App() {
       setMovies(response.data.movies);
     });
 		
-    api.get<SelectedGenre>(`/genres/${selectedGenreId}`)
+    api.get<SelectedGenreResponse>(`/genres/${selectedGenreId}`)
 		.then(response => {
       setSelectedGenre(response.data.genre);
     })
