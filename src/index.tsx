@@ -996,8 +996,8 @@ createServer({
     this.namespace = "api"
 
 		this.get("/genres")
-		this.get("genres/:id")
-		this.get("/movies/", (schema: any, request) => schema.where("movie", request.queryParams))
+		this.get("/genres/:id")
+		this.get("/movies/", (schema, request) => schema.where("movie", request.queryParams))
   }
 })
 
